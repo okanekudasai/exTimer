@@ -6,7 +6,7 @@
     </div>
 
     <SettingView v-if="setting_view" @starting-timer="starting_timer"></SettingView>
-    <TimerView v-else></TimerView>
+    <TimerView :prop_number="number" :is_ring_on="ring_sound" v-else @reset_button="reset_button"></TimerView>
 
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       ring_sound: true,
-      setting_view: false,
+      setting_view: true,
       number: {},
     }
   },
@@ -32,8 +32,10 @@ export default {
     },
     starting_timer(number) {
       this.number = number;
-
       this.setting_view = false;
+    },
+    reset_button() {
+      this.setting_view = true;
     }
   }
 }

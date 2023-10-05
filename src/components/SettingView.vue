@@ -6,7 +6,7 @@
                     <img src="@/assets/set_image.svg" />
                 </div>
                 <div>
-                    세트 수
+                    세트 수(회)
                 </div>
                 <div style="margin-left: 20px;">
                     <div @click="minusing_set_count">
@@ -27,7 +27,7 @@
                     <img src="@/assets/set_image.svg" />
                 </div>
                 <div>
-                    세트 간격
+                    세트 간격(초)
                 </div>
                 <div style="margin-left: 20px;">
                     <div @click="minusing_set_interval">
@@ -51,7 +51,7 @@
                     <img src="@/assets/set_image.svg" />
                 </div>
                 <div>
-                    반복 수
+                    반복 수(회)
                 </div>
                 <div style="margin-left: 20px;">
                     <div @click="minusing_rep_count">
@@ -72,7 +72,7 @@
                     <img src="@/assets/set_image.svg" />
                 </div>
                 <div>
-                    운동 시간
+                    운동 시간(초)
                 </div>
                 <div style="margin-left: 20px;">
                     <div @click="minusing_rep_excute">
@@ -94,7 +94,7 @@
                     <img src="@/assets/set_image.svg" />
                 </div>
                 <div>
-                    휴식 시간
+                    휴식 시간(초)
                 </div>
                 <div style="margin-left: 20px;">
                     <div @click="minusing_rep_rest">
@@ -112,6 +112,10 @@
             </div>
         </div>
 
+        <div style="display: flex; justify-content: center; align-items: center; border-radius: 10px; color: white; margin: 0 auto; width: 30%; height: 40px; background-color: rgb(171, 125, 203);" @click="preset_button">
+            <div>프리셋</div>
+        </div>
+
         <div id="start_button" @click="starting">
             <div>
                 시작
@@ -122,6 +126,7 @@
 
 <script>
     export default {
+        
         data() {
             return {
                 number: {
@@ -190,6 +195,15 @@
             },
             starting() {
                 this.$emit('startingTimer', this.number)
+            },
+            preset_button() {
+                this.number = {
+                    set_count: 5,
+                    set_interval: 60,
+                    rep_count: 20,
+                    rep_excute: 15,
+                    rep_rest: 15
+                }
             }
         }
     }
