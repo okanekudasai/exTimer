@@ -1,26 +1,57 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="main_container" style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0;">
+    <div style="position: absolute; right: 20px; top: 20px;">
+      <img class="bell_image" v-if="ring_sound" src="@/assets/bell_sound.svg" @click="toggle_sound">
+      <img class="bell_image" v-else src="@/assets/bell_not_sound.svg" @click="toggle_sound">
+    </div>
+
+    <SettingView v-if="setting_view" @starting-timer="starting_timer"></SettingView>
+    <TimerView v-else></TimerView>
+
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import SettingView from "@/components/SettingView.vue"
+import TimerView from "@/components/TimerView.vue"
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    SettingView,
+    TimerView
+  },
+  data() {
+    return {
+      ring_sound: true,
+      setting_view: false,
+      number: {},
+    }
+  },
+  methods: {
+    toggle_sound() {
+      this.ring_sound = !this.ring_sound;
+    },
+    starting_timer(number) {
+      this.number = number;
+
+      this.setting_view = false;
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+input:focus {
+  outline: none
+}
+</style>
+
+<style scoped>
+.bell_image {
+  width: 50px;
 }
 </style>
