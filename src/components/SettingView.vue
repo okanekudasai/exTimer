@@ -130,7 +130,7 @@
         data() {
             return {
                 number: {
-                    set_count: 0,
+                    set_count: 1,
                     set_interval: 0,
                     rep_count: 0,
                     rep_excute: 0,
@@ -143,8 +143,8 @@
                 this.number.set_count++;
             },
             minusing_set_count() {
-                if (this.number.set_count <= 0) {
-                    this.number.set_count = 0;
+                if (this.number.set_count <= 1) {
+                    this.number.set_count = 1;
                     return;
                 } 
                 this.number.set_count--;

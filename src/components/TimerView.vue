@@ -57,7 +57,8 @@ import do_rest from "@/assets/do_rest.mp3";
 import do_excute from "@/assets/excute.mp3";
 import end_rep from "@/assets/end_rep.mp3";
 import end_set from "@/assets/end_set.mp3";
-import beeping from "@/assets/beep.mp3"
+import beeping from "@/assets/beep.mp3";
+import end_ex from "@/assets/end_ex.mp3";
 export default {
     props: {
         prop_number: {
@@ -100,13 +101,14 @@ export default {
         this.screen_w = screen.width;
         for (let i = 0; i < this.number.set_count; i++) {
             for (let j = 0; j < this.number.rep_count; j++) {
-                this.schedule.push({ type: "운동", value: this.number.rep_excute, set: i, rep: j });
-                this.schedule.push({ type: "휴식", value: this.number.rep_rest, set: i, rep: j });
+                if (this.number.rep_excute > 0) this.schedule.push({ type: "운동", value: this.number.rep_excute, set: i, rep: j });
+                if (this.number.rep_rest > 0) this.schedule.push({ type: "휴식", value: this.number.rep_rest, set: i, rep: j });
             }
-            this.schedule.pop();
-            this.schedule.push({ type: "세트휴식", value: this.number.set_interval, set: i});
+            if (this.number.rep_rest > 0) this.schedule.pop();
+            if(this.number.set_interval > 0) this.schedule.push({ type: "세트휴식", value: this.number.set_interval, set: i});
         }
-        this.schedule.pop();
+        if(this.number.set_interval > 0) this.schedule.pop();
+        if (this.schedule.length == 0) return;
         this.$refs.progress_color.style.strokeDasharray = this.excute_r * Math.PI * 2;
         this.$refs.progress_color_rep.style.strokeDasharray = this.rep_r * Math.PI * 2;
         this.$refs.progress_color_set.style.strokeDasharray = this.set_r * Math.PI * 2;
@@ -124,7 +126,8 @@ export default {
             do_excute: new Audio(do_excute),
             end_rep: new Audio(end_rep),
             end_set: new Audio(end_set),
-            beep: new Audio(beeping)
+            beep: new Audio(beeping),
+            end_ex: new Audio(end_ex)
         }
         this.number = this.prop_number;
     },
@@ -139,6 +142,10 @@ export default {
                     this.progress_rep(this.number.rep_count);
                     this.progress_set(this.number.set_count);
                     clearInterval(this.interval);
+                    if (this.is_ring_on) {
+                        this.sound_zip.beep.play();
+                        this.sound_zip.end_ex.play();  
+                    }
                     return;
                 }
                 if (this.schedule[this.current_index-1].rep != this.schedule[this.current_index].rep) {
