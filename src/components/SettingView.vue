@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <div style="display: flex; justify-content: center; align-items: center; border-radius: 10px; color: white; margin: 0 auto; width: 30%; height: 40px; background-color: rgb(171, 125, 203);" @click="preset_button">
+        <div id="preset_button" @click="preset_button">
             <div>프리셋</div>
         </div>
 
@@ -132,7 +132,7 @@
                 number: {
                     set_count: 1,
                     set_interval: 0,
-                    rep_count: 0,
+                    rep_count: 1,
                     rep_excute: 0,
                     rep_rest: 0
                 },
@@ -165,8 +165,8 @@
                 this.number.rep_count++;
             },
             minusing_rep_count() {
-                if (this.number.rep_count <= 0) {
-                    this.number.rep_count = 0;
+                if (this.number.rep_count <= 1) {
+                    this.number.rep_count = 1;
                     return;
                 } 
                 this.number.rep_count--;
@@ -237,5 +237,16 @@
         bottom: 80px;
         left: 0;
         right: 0;
+    }
+    #start_button:hover {
+        cursor: pointer;
+        background-color: rgb(107, 153, 188);
+    }
+    #preset_button {
+        display: flex; justify-content: center; align-items: center; border-radius: 10px; color: white; margin: 0 auto; width: 30%; height: 40px; background-color: rgb(171, 125, 203);
+    }
+    #preset_button:hover {
+        cursor: pointer;
+        background-color: rgb(140, 104, 167);
     }
 </style>
